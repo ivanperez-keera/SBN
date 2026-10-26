@@ -129,10 +129,10 @@ bool SBN_UnpackMsg(void               *SBNBuf,
                    CFE_SpacecraftID_t *SpacecraftIDPtr,
                    void               *Msg)
 {
-    uint8           t;
-    SBN_PackState_t Pack;
+    uint8             t;
+    SBN_UnpackState_t Pack;
 
-    SBN_Pack_Init(&Pack, SBNBuf, SBN_MAX_PACKED_MSG_SZ, false);
+    SBN_Unpack_Init(&Pack, SBNBuf, SBN_MAX_PACKED_MSG_SZ);
 
     *MsgSzPtr = 0;
     SBN_Unpack_UInt32(&Pack, MsgSzPtr);

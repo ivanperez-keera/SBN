@@ -83,7 +83,7 @@ static SBN_Status_t SendLocalSubToPeer(int SubType, CFE_SB_MsgId_t MsgID, CFE_SB
     SBN_Pack_Data(&Pack, &QoS, sizeof(QoS)); /* 2 uint8's */
 
     EVSSendDbg(SBN_PEER_EID, "send local sub to peer %d:%d", Peer->SpacecraftID, Peer->ProcessorID);
-    return SBN_SendNetMsg(SubType, Pack.BufUsed, Buf, Peer);
+    return SBN_SendNetMsg(SubType, SBN_Pack_GetPosition(&Pack), Buf, Peer);
 } /* end SendLocalSubToPeer */
 
 /**
@@ -108,7 +108,7 @@ SBN_Status_t SBN_SendLocalSubsToPeer(SBN_PeerInterface_t *Peer)
     } /* end for */
 
     EVSSendDbg(SBN_PEER_EID, "send local subs to peer %d:%d", Peer->SpacecraftID, Peer->ProcessorID);
-    return SBN_SendNetMsg(SBN_SUB_MSG, Pack.BufUsed, Buf, Peer);
+    return SBN_SendNetMsg(SBN_SUB_MSG, SBN_Pack_GetPosition(&Pack), Buf, Peer);
 } /* end SBN_SendLocalSubsToPeer */
 
 /**
@@ -488,11 +488,11 @@ static SBN_Status_t ProcessSubFromPeer(SBN_PeerInterface_t *Peer, CFE_SB_MsgId_t
  */
 SBN_Status_t SBN_ProcessSubsFromPeer(SBN_PeerInterface_t *Peer, void *Msg)
 {
-    SBN_Status_t    SBN_Status;
-    SBN_PackState_t Pack;
-    char            VersionHash[SBN_IDENT_LEN];
+    SBN_Status_t      SBN_Status;
+    SBN_UnpackState_t Pack;
+    char              VersionHash[SBN_IDENT_LEN];
 
-    SBN_Pack_Init(&Pack, Msg, CFE_MISSION_SB_MAX_SB_MSG_SIZE, false);
+    SBN_Unpack_Init(&Pack, Msg, CFE_MISSION_SB_MAX_SB_MSG_SIZE);
 
     SBN_Unpack_Data(&Pack, VersionHash, SBN_IDENT_LEN);
 
@@ -604,9 +604,9 @@ static SBN_Status_t ProcessUnsubFromPeer(SBN_PeerInterface_t *Peer, CFE_SB_MsgId
  */
 SBN_Status_t SBN_ProcessUnsubsFromPeer(SBN_PeerInterface_t *Peer, void *Msg)
 {
-    SBN_PackState_t Pack;
+    SBN_UnpackState_t Pack;
 
-    SBN_Pack_Init(&Pack, Msg, CFE_MISSION_SB_MAX_SB_MSG_SIZE, false);
+    SBN_Unpack_Init(&Pack, Msg, CFE_MISSION_SB_MAX_SB_MSG_SIZE);
 
     char VersionHash[SBN_IDENT_LEN];
 

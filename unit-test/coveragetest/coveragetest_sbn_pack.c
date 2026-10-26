@@ -20,12 +20,16 @@
 #include "cfe_msgids.h"
 #include "sbn_pack.h"
 
-uint8           Buf[22];
-SBN_PackState_t Pack;
+uint8 Buf[22];
 
 void Test_Pack(void)
 {
+    SBN_PackState_t Pack;
+
     UtAssert_True(SBN_Pack_Init(&Pack, Buf, sizeof(Buf), true), "pack init");
+
+    UtAssert_UINT32_EQ(SBN_Pack_GetPosition(&Pack), 0);
+
     UtAssert_True(SBN_Pack_UInt8(&Pack, (uint8)1), "pack uint8");                                // 1 byte
     UtAssert_True(SBN_Pack_UInt8(&Pack, (uint8)255), "pack uint8");                              // 2 bytes
     UtAssert_True(SBN_Pack_UInt16(&Pack, (uint16)2), "pack uint16");                             // 4 bytes
@@ -36,7 +40,16 @@ void Test_Pack(void)
     UtAssert_True(!SBN_Pack_Time(&Pack, OS_TimeAssembleFromMicroseconds(0xa, 0xb)),
                   "pack time 2"); // should fail, out of space
 
-    UtAssert_True(SBN_Pack_Init(&Pack, Buf, sizeof(Buf), false), "pack init 2");
+    UtAssert_UINT32_EQ(SBN_Pack_GetPosition(&Pack), sizeof(Buf));
+}
+
+void Test_Unpack(void)
+{
+    SBN_UnpackState_t Pack;
+
+    UtAssert_True(SBN_Unpack_Init(&Pack, Buf, sizeof(Buf)), "pack init 2");
+
+    UtAssert_UINT32_EQ(SBN_Unpack_GetPosition(&Pack), 0);
 
     uint8 u8;
     UtAssert_True(SBN_Unpack_UInt8(&Pack, &u8), "unpack uint8"); // 1 byte
@@ -71,6 +84,9 @@ void Test_Pack(void)
     UtAssert_True(!SBN_Unpack_UInt32(&Pack, &u32), "unpack uint32");
     UtAssert_True(!SBN_Unpack_MsgID(&Pack, &MsgID), "unpack msgid");
     UtAssert_True(!SBN_Unpack_Time(&Pack, &T), "unpack time");
+
+    UtAssert_UINT32_EQ(SBN_Unpack_GetPosition(&Pack), sizeof(Buf));
+
 } /* end Test_Pack() */
 
 void UT_Setup(void)
@@ -84,4 +100,5 @@ void UT_TearDown(void)
 void UtTest_Setup(void)
 {
     ADD_TEST(Pack);
+    ADD_TEST(Unpack);
 }

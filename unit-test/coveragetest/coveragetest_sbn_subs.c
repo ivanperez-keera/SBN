@@ -412,8 +412,8 @@ static void PSFP_PFP_FiltErr(void)
     PeerPtr->Filters[0] = &Filter1;
     PeerPtr->Filters[1] = &Filter2;
 
-    uint8      Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
-    SBN_Pack_t Pack;
+    uint8           Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, CFE_MISSION_SB_MAX_SB_MSG_SIZE, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);
@@ -433,8 +433,8 @@ static void PSFP_PFP_AlreadySub(void)
     PeerPtr->SubCnt        = 1;
     PeerPtr->Subs[0].MsgID = MsgID;
 
-    uint8      Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
-    SBN_Pack_t Pack;
+    uint8           Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, CFE_MISSION_SB_MAX_SB_MSG_SIZE, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);
@@ -455,8 +455,8 @@ static void PSFP_PFP_SubErr(void)
 
     UT_CheckEvent_Setup(SBN_SUB_EID, "unable to subscribe to MID 0x");
 
-    uint8      Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
-    SBN_Pack_t Pack;
+    uint8           Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, CFE_MISSION_SB_MAX_SB_MSG_SIZE, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);
@@ -481,8 +481,8 @@ static void PSFP_PFP_MaxSubsErr(void)
 
     PeerPtr->SubCnt = SBN_MAX_SUBS_PER_PEER;
 
-    uint8      Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
-    SBN_Pack_t Pack;
+    uint8           Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, CFE_MISSION_SB_MAX_SB_MSG_SIZE, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);
@@ -506,7 +506,7 @@ static void PSFP_IdentErr(void)
     uint8 Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
     char  tmpident[SBN_IDENT_LEN];
     memset(tmpident, 0, sizeof(tmpident));
-    SBN_Pack_t Pack;
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, CFE_MISSION_SB_MAX_SB_MSG_SIZE, 0);
     SBN_Pack_Data(&Pack, (void *)tmpident, sizeof(tmpident));
     SBN_Pack_UInt16(&Pack, 1);
@@ -525,8 +525,8 @@ static void PSFP_Nominal(void)
 {
     START();
 
-    uint8      Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
-    SBN_Pack_t Pack;
+    uint8           Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, CFE_MISSION_SB_MAX_SB_MSG_SIZE, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);
@@ -563,8 +563,8 @@ static void PUSFP_PUFP_FiltErr(void)
     PeerPtr->Filters[0] = &Filter1;
     PeerPtr->Filters[1] = &Filter2;
 
-    uint8      Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
-    SBN_Pack_t Pack;
+    uint8           Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, CFE_MISSION_SB_MAX_SB_MSG_SIZE, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);
@@ -584,8 +584,8 @@ static void PUSFP_PUFP_NotSub(void)
 
     UT_CheckEvent_Setup(SBN_SUB_EID, "cannot process unsubscription from ProcessorID ");
 
-    uint8      Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
-    SBN_Pack_t Pack;
+    uint8           Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, CFE_MISSION_SB_MAX_SB_MSG_SIZE, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);
@@ -609,8 +609,8 @@ static void PUSFP_PUFP_UnsubErr(void)
     PeerPtr->SubCnt        = 1;
     PeerPtr->Subs[0].MsgID = MsgID;
 
-    uint8      Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
-    SBN_Pack_t Pack;
+    uint8           Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, CFE_MISSION_SB_MAX_SB_MSG_SIZE, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);
@@ -639,7 +639,7 @@ static void PUSFP_IdentWarn(void)
     uint8 Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
     char  tmpident[SBN_IDENT_LEN];
     memset(tmpident, 0, sizeof(tmpident));
-    SBN_Pack_t Pack;
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, CFE_MISSION_SB_MAX_SB_MSG_SIZE, 0);
     SBN_Pack_Data(&Pack, (void *)tmpident, sizeof(tmpident));
     SBN_Pack_UInt16(&Pack, 1);
@@ -661,8 +661,8 @@ static void PUSFP_Nominal(void)
     PeerPtr->SubCnt        = 1;
     PeerPtr->Subs[0].MsgID = MsgID;
 
-    uint8      Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
-    SBN_Pack_t Pack;
+    uint8           Buf[CFE_MISSION_SB_MAX_SB_MSG_SIZE];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, CFE_MISSION_SB_MAX_SB_MSG_SIZE, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);

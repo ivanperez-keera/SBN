@@ -19,7 +19,7 @@
 #include "sbn_pack.h"
 #include <string.h> /* memcpy */
 
-bool SBN_Pack_Init(SBN_Pack_t *PackPtr, void *Buf, size_t BufSz, bool ClearFlag)
+bool SBN_Pack_Init(SBN_PackState_t *PackPtr, void *Buf, size_t BufSz, bool ClearFlag)
 {
     PackPtr->Buf     = Buf;
     PackPtr->BufSz   = BufSz;
@@ -31,7 +31,7 @@ bool SBN_Pack_Init(SBN_Pack_t *PackPtr, void *Buf, size_t BufSz, bool ClearFlag)
     return true;
 } /* end SBN_Pack_Init() */
 
-bool SBN_Pack_Data(SBN_Pack_t *PackPtr, void *DataBuf, size_t DataBufSz)
+bool SBN_Pack_Data(SBN_PackState_t *PackPtr, void *DataBuf, size_t DataBufSz)
 {
     if (PackPtr->BufUsed + DataBufSz > PackPtr->BufSz)
     {
@@ -45,42 +45,42 @@ bool SBN_Pack_Data(SBN_Pack_t *PackPtr, void *DataBuf, size_t DataBufSz)
     return true;
 } /* end SBN_Pack_Data() */
 
-bool SBN_Pack_UInt8(SBN_Pack_t *PackPtr, uint8 Data)
+bool SBN_Pack_UInt8(SBN_PackState_t *PackPtr, uint8 Data)
 {
     return SBN_Pack_Data(PackPtr, &Data, sizeof(Data));
 } /* end SBN_Pack_UInt8() */
 
-bool SBN_Pack_UInt16(SBN_Pack_t *PackPtr, uint16 Data)
+bool SBN_Pack_UInt16(SBN_PackState_t *PackPtr, uint16 Data)
 {
     uint16 D = CFE_MAKE_BIG16(Data);
     return SBN_Pack_Data(PackPtr, &D, sizeof(D));
 } /* end SBN_Pack_UInt16() */
 
-bool SBN_Pack_Int16(SBN_Pack_t *PackPtr, int16 Data)
+bool SBN_Pack_Int16(SBN_PackState_t *PackPtr, int16 Data)
 {
     int16 D = CFE_MAKE_BIG16(Data);
     return SBN_Pack_Data(PackPtr, &D, sizeof(D));
 } /* end SBN_Pack_Int16() */
 
-bool SBN_Pack_UInt32(SBN_Pack_t *PackPtr, uint32 Data)
+bool SBN_Pack_UInt32(SBN_PackState_t *PackPtr, uint32 Data)
 {
     uint32 D = CFE_MAKE_BIG32(Data);
     return SBN_Pack_Data(PackPtr, &D, sizeof(D));
 } /* end SBN_Pack_UInt32() */
 
-bool SBN_Pack_Time(SBN_Pack_t *PackPtr, OS_time_t Data)
+bool SBN_Pack_Time(SBN_PackState_t *PackPtr, OS_time_t Data)
 {
     return SBN_Pack_Data(PackPtr, &Data, sizeof(Data));
 } /* end SBN_Pack_Time() */
 
-bool SBN_Pack_MsgID(SBN_Pack_t *PackPtr, CFE_SB_MsgId_t Data)
+bool SBN_Pack_MsgID(SBN_PackState_t *PackPtr, CFE_SB_MsgId_t Data)
 {
     uint32 D;
     D = CFE_MAKE_BIG32(CFE_SB_MsgIdToValue(Data));
     return SBN_Pack_Data(PackPtr, &D, sizeof(D));
 } /* end SBN_Pack_MsgID() */
 
-bool SBN_Unpack_Data(SBN_Pack_t *PackPtr, void *DataBuf, size_t Sz)
+bool SBN_Unpack_Data(SBN_PackState_t *PackPtr, void *DataBuf, size_t Sz)
 {
     if (PackPtr->BufUsed + Sz > PackPtr->BufSz)
     {
@@ -94,12 +94,12 @@ bool SBN_Unpack_Data(SBN_Pack_t *PackPtr, void *DataBuf, size_t Sz)
     return true;
 } /* end SBN_Unpack_Data() */
 
-bool SBN_Unpack_UInt8(SBN_Pack_t *PackPtr, uint8 *DataBuf)
+bool SBN_Unpack_UInt8(SBN_PackState_t *PackPtr, uint8 *DataBuf)
 {
     return SBN_Unpack_Data(PackPtr, DataBuf, sizeof(*DataBuf));
 } /* end SBN_Unpack_UInt8() */
 
-bool SBN_Unpack_UInt16(SBN_Pack_t *PackPtr, uint16 *DataBuf)
+bool SBN_Unpack_UInt16(SBN_PackState_t *PackPtr, uint16 *DataBuf)
 {
     uint16 D;
     if (!SBN_Unpack_Data(PackPtr, &D, sizeof(D)))
@@ -110,7 +110,7 @@ bool SBN_Unpack_UInt16(SBN_Pack_t *PackPtr, uint16 *DataBuf)
     return true;
 } /* end SBN_Unpack_UInt16() */
 
-bool SBN_Unpack_Int16(SBN_Pack_t *PackPtr, int16 *DataBuf)
+bool SBN_Unpack_Int16(SBN_PackState_t *PackPtr, int16 *DataBuf)
 {
     int16 D;
     if (!SBN_Unpack_Data(PackPtr, &D, sizeof(D)))
@@ -121,7 +121,7 @@ bool SBN_Unpack_Int16(SBN_Pack_t *PackPtr, int16 *DataBuf)
     return true;
 } /* end SBN_Unpack_Int16() */
 
-bool SBN_Unpack_UInt32(SBN_Pack_t *PackPtr, uint32 *DataBuf)
+bool SBN_Unpack_UInt32(SBN_PackState_t *PackPtr, uint32 *DataBuf)
 {
     uint32 D;
     if (!SBN_Unpack_Data(PackPtr, &D, sizeof(D)))
@@ -132,7 +132,7 @@ bool SBN_Unpack_UInt32(SBN_Pack_t *PackPtr, uint32 *DataBuf)
     return true;
 } /* end SBN_Unpack_UInt32() */
 
-bool SBN_Unpack_Time(SBN_Pack_t *PackPtr, OS_time_t *DataBuf)
+bool SBN_Unpack_Time(SBN_PackState_t *PackPtr, OS_time_t *DataBuf)
 {
     OS_time_t D;
     if (!SBN_Unpack_Data(PackPtr, &D, sizeof(D)))
@@ -143,7 +143,7 @@ bool SBN_Unpack_Time(SBN_Pack_t *PackPtr, OS_time_t *DataBuf)
     return true;
 } /* end SBN_Unpack_Time() */
 
-bool SBN_Unpack_MsgID(SBN_Pack_t *PackPtr, CFE_SB_MsgId_t *DataBuf)
+bool SBN_Unpack_MsgID(SBN_PackState_t *PackPtr, CFE_SB_MsgId_t *DataBuf)
 {
     uint32 D;
     if (!SBN_Unpack_Data(PackPtr, &D, sizeof(D)))

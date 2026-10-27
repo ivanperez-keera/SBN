@@ -1935,8 +1935,8 @@ static void ProcessNetMsg_SubMsg_Nominal(void)
     START();
 
     UT_ResetState(0);
-    uint8      Buf[SBN_PACKED_SUB_SZ];
-    SBN_Pack_t Pack;
+    uint8           Buf[SBN_PACKED_SUB_SZ];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, SBN_PACKED_SUB_SZ, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);
@@ -1957,8 +1957,8 @@ static void ProcessNetMsg_UnSubMsg_Nominal(void)
     START();
 
     UT_ResetState(0);
-    uint8      Buf[SBN_PACKED_SUB_SZ];
-    SBN_Pack_t Pack;
+    uint8           Buf[SBN_PACKED_SUB_SZ];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, sizeof(Buf), 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);
@@ -2363,7 +2363,7 @@ static void SBN_Unpack_Err(void)
     CFE_ProcessorID_t  ProcID;
     CFE_SpacecraftID_t SpaceID;
 
-    SBN_Pack_t Pack;
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, Buf, SBN_MAX_PACKED_MSG_SZ + SBN_PACKED_HDR_SZ, 0);
     SBN_Pack_Int16(&Pack, -1); /* invalid msg size */
     SBN_Pack_UInt8(&Pack, SBN_APP_MSG);

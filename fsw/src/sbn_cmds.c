@@ -275,7 +275,7 @@ static void HKCmd(CFE_MSG_Message_t *MsgPtr)
 
     uint8                 HKBuf[SBN_HK_LEN];
     CFE_MSG_Message_t    *HKMsg = (CFE_MSG_Message_t *)HKBuf;
-    SBN_Pack_t            Pack;
+    SBN_PackState_t       Pack;
     static CFE_SB_MsgId_t HK_TLM_MID = CFE_SB_MSGID_RESERVED;
 
     /* cache the local MID Values here, this avoids repeat lookups */
@@ -332,7 +332,7 @@ static void HKNetCmd(CFE_MSG_Message_t *MsgPtr)
 
     uint8                 HKBuf[SBN_HKNET_LEN];
     CFE_MSG_Message_t    *HKMsg = (CFE_MSG_Message_t *)HKBuf;
-    SBN_Pack_t            Pack;
+    SBN_PackState_t       Pack;
     static CFE_SB_MsgId_t HKNET_TLM_MID = CFE_SB_MSGID_RESERVED;
 
     /* cache the local MID Values here, this avoids repeat lookups */
@@ -403,7 +403,7 @@ static void HKPeerCmd(CFE_MSG_Message_t *MsgPtr)
 
     uint8                 HKBuf[SBN_HKPEER_LEN];
     CFE_MSG_Message_t    *HKMsg = (CFE_MSG_Message_t *)HKBuf;
-    SBN_Pack_t            Pack;
+    SBN_PackState_t       Pack;
     static CFE_SB_MsgId_t HKPEER_TLM_MID = CFE_SB_MSGID_RESERVED;
 
     /* cache the local MID Values here, this avoids repeat lookups */
@@ -457,7 +457,7 @@ static void MySubsCmd(CFE_MSG_Message_t *MsgPtr)
 
     uint8                 HKBuf[SBN_HKMYSUBS_LEN];
     CFE_MSG_Message_t    *HKMsg = (CFE_MSG_Message_t *)HKBuf;
-    SBN_Pack_t            Pack;
+    SBN_PackState_t       Pack;
     static CFE_SB_MsgId_t HKMYSUBS_TLM_MID = CFE_SB_MSGID_RESERVED;
 
     /* cache the local MID Values here, this avoids repeat lookups */
@@ -556,7 +556,7 @@ static void PeerSubsCmd(CFE_MSG_Message_t *MsgPtr)
 
     uint8                 HKBuf[SBN_HKPEERSUBS_LEN];
     CFE_MSG_Message_t    *HKMsg = (CFE_MSG_Message_t *)HKBuf;
-    SBN_Pack_t            Pack;
+    SBN_PackState_t       Pack;
     static CFE_SB_MsgId_t HKPEERSUBS_TLM_MID = CFE_SB_MSGID_RESERVED;
 
     /* cache the local MID Values here, this avoids repeat lookups */

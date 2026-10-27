@@ -20,8 +20,8 @@
 #include "cfe_msgids.h"
 #include "sbn_pack.h"
 
-uint8      Buf[22];
-SBN_Pack_t Pack;
+uint8           Buf[22];
+SBN_PackState_t Pack;
 
 void Test_Pack(void)
 {

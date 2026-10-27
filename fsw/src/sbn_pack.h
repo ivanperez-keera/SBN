@@ -27,7 +27,7 @@
  * General pattern is:
  *
  * ```
- * SBN_Pack_t Pack;
+ * SBN_PackState_t Pack;
  * uint8 Buffer[BUFSZ];
  * void packfn()
  * {
@@ -52,7 +52,7 @@ typedef struct
 {
     void  *Buf;
     size_t BufSz, BufUsed;
-} SBN_Pack_t;
+} SBN_PackState_t;
 
 /**
  * Initialize the packing management structure.
@@ -69,7 +69,7 @@ typedef struct
  * @sa #SBN_Unpack_Data, #SBN_Unpack_UInt8, #SBN_Unpack_Int16, #SBN_Unpack_UInt16, #SBN_Unpack_UInt32, #SBN_Unpack_Time,
  * #SBN_Unpack_MsgID
  */
-bool SBN_Pack_Init(SBN_Pack_t *PackPtr, void *Buf, size_t BufSz, bool ClearFlag);
+bool SBN_Pack_Init(SBN_PackState_t *PackPtr, void *Buf, size_t BufSz, bool ClearFlag);
 
 /**
  * Pack data into the buffer. This does the grunt-work of managing the buffer,
@@ -84,7 +84,7 @@ bool SBN_Pack_Init(SBN_Pack_t *PackPtr, void *Buf, size_t BufSz, bool ClearFlag)
  *
  * @sa #SBN_Pack_Init, #SBN_Unpack_Data
  */
-bool SBN_Pack_Data(SBN_Pack_t *PackPtr, void *DataBuf, size_t DataBufSz);
+bool SBN_Pack_Data(SBN_PackState_t *PackPtr, void *DataBuf, size_t DataBufSz);
 
 /**
  * Pack an unsigned 8-bit integer into the buffer.
@@ -97,7 +97,7 @@ bool SBN_Pack_Data(SBN_Pack_t *PackPtr, void *DataBuf, size_t DataBufSz);
  *
  * @sa #SBN_Pack_Data
  */
-bool SBN_Pack_UInt8(SBN_Pack_t *PackPtr, uint8 Data);
+bool SBN_Pack_UInt8(SBN_PackState_t *PackPtr, uint8 Data);
 
 /**
  * Pack an unsigned 16-bit integer into the buffer.
@@ -110,7 +110,7 @@ bool SBN_Pack_UInt8(SBN_Pack_t *PackPtr, uint8 Data);
  *
  * @sa #SBN_Pack_Data
  */
-bool SBN_Pack_UInt16(SBN_Pack_t *PackPtr, uint16 Data);
+bool SBN_Pack_UInt16(SBN_PackState_t *PackPtr, uint16 Data);
 
 /**
  * Pack a signed 16-bit integer into the buffer.
@@ -123,7 +123,7 @@ bool SBN_Pack_UInt16(SBN_Pack_t *PackPtr, uint16 Data);
  *
  * @sa #SBN_Pack_Data
  */
-bool SBN_Pack_Int16(SBN_Pack_t *PackPtr, int16 Data);
+bool SBN_Pack_Int16(SBN_PackState_t *PackPtr, int16 Data);
 
 /**
  * Pack an unsigned 32-bit integer into the buffer.
@@ -136,7 +136,7 @@ bool SBN_Pack_Int16(SBN_Pack_t *PackPtr, int16 Data);
  *
  * @sa #SBN_Pack_Data
  */
-bool SBN_Pack_UInt32(SBN_Pack_t *PackPtr, uint32 Data);
+bool SBN_Pack_UInt32(SBN_PackState_t *PackPtr, uint32 Data);
 
 /**
  * Pack a time datum into the buffer.
@@ -149,7 +149,7 @@ bool SBN_Pack_UInt32(SBN_Pack_t *PackPtr, uint32 Data);
  *
  * @sa #SBN_Pack_Data
  */
-bool SBN_Pack_Time(SBN_Pack_t *PackPtr, OS_time_t Data);
+bool SBN_Pack_Time(SBN_PackState_t *PackPtr, OS_time_t Data);
 
 /**
  * Pack a CFE Software Bus message identifier into the buffer.
@@ -162,7 +162,7 @@ bool SBN_Pack_Time(SBN_Pack_t *PackPtr, OS_time_t Data);
  *
  * @sa #SBN_Pack_Data
  */
-bool SBN_Pack_MsgID(SBN_Pack_t *PackPtr, CFE_SB_MsgId_t Data);
+bool SBN_Pack_MsgID(SBN_PackState_t *PackPtr, CFE_SB_MsgId_t Data);
 
 /**
  * Unpacks data from the existing packed buffer. This does the grunt-work of managing the buffer,
@@ -177,7 +177,7 @@ bool SBN_Pack_MsgID(SBN_Pack_t *PackPtr, CFE_SB_MsgId_t Data);
  *
  * @sa #SBN_Pack_Init, #SBN_Pack_Data
  */
-bool SBN_Unpack_Data(SBN_Pack_t *PackPtr, void *DataBuf, size_t Sz);
+bool SBN_Unpack_Data(SBN_PackState_t *PackPtr, void *DataBuf, size_t Sz);
 
 /**
  * Unpack an unsigned 8-bit integer from the pack buffer.
@@ -190,7 +190,7 @@ bool SBN_Unpack_Data(SBN_Pack_t *PackPtr, void *DataBuf, size_t Sz);
  *
  * @sa #SBN_Unpack_Data
  */
-bool SBN_Unpack_UInt8(SBN_Pack_t *PackPtr, uint8 *DataBuf);
+bool SBN_Unpack_UInt8(SBN_PackState_t *PackPtr, uint8 *DataBuf);
 
 /**
  * Unpack an unsigned 16-bit integer from the pack buffer.
@@ -203,7 +203,7 @@ bool SBN_Unpack_UInt8(SBN_Pack_t *PackPtr, uint8 *DataBuf);
  *
  * @sa #SBN_Unpack_Data
  */
-bool SBN_Unpack_UInt16(SBN_Pack_t *PackPtr, uint16 *DataBuf);
+bool SBN_Unpack_UInt16(SBN_PackState_t *PackPtr, uint16 *DataBuf);
 
 /**
  * Unpack a signed 16-bit integer from the pack buffer.
@@ -216,7 +216,7 @@ bool SBN_Unpack_UInt16(SBN_Pack_t *PackPtr, uint16 *DataBuf);
  *
  * @sa #SBN_Unpack_Data
  */
-bool SBN_Unpack_Int16(SBN_Pack_t *PackPtr, int16 *DataBuf);
+bool SBN_Unpack_Int16(SBN_PackState_t *PackPtr, int16 *DataBuf);
 
 /**
  * Unpack an unsigned 32-bit integer from the pack buffer.
@@ -229,7 +229,7 @@ bool SBN_Unpack_Int16(SBN_Pack_t *PackPtr, int16 *DataBuf);
  *
  * @sa #SBN_Unpack_Data
  */
-bool SBN_Unpack_UInt32(SBN_Pack_t *PackPtr, uint32 *DataBuf);
+bool SBN_Unpack_UInt32(SBN_PackState_t *PackPtr, uint32 *DataBuf);
 
 /**
  * Unpack a time datum from the buffer.
@@ -242,7 +242,7 @@ bool SBN_Unpack_UInt32(SBN_Pack_t *PackPtr, uint32 *DataBuf);
  *
  * @sa #SBN_Unpack_Data
  */
-bool SBN_Unpack_Time(SBN_Pack_t *PackPtr, OS_time_t *DataBuf);
+bool SBN_Unpack_Time(SBN_PackState_t *PackPtr, OS_time_t *DataBuf);
 
 /**
  * Unpack a CFE software bus message identifier from the pack buffer.
@@ -255,6 +255,6 @@ bool SBN_Unpack_Time(SBN_Pack_t *PackPtr, OS_time_t *DataBuf);
  *
  * @sa #SBN_Unpack_Data
  */
-bool SBN_Unpack_MsgID(SBN_Pack_t *PackPtr, CFE_SB_MsgId_t *DataBuf);
+bool SBN_Unpack_MsgID(SBN_PackState_t *PackPtr, CFE_SB_MsgId_t *DataBuf);
 
 #endif /* _sbn_pack_h_ */

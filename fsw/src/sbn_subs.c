@@ -73,8 +73,8 @@ SBN_Status_t SBN_SendSubsRequests(void)
  */
 static SBN_Status_t SendLocalSubToPeer(int SubType, CFE_SB_MsgId_t MsgID, CFE_SB_Qos_t QoS, SBN_PeerInterface_t *Peer)
 {
-    uint8      Buf[SBN_PACKED_SUB_SZ];
-    SBN_Pack_t Pack;
+    uint8           Buf[SBN_PACKED_SUB_SZ];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, SBN_PACKED_SUB_SZ, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, 1);
@@ -93,8 +93,8 @@ static SBN_Status_t SendLocalSubToPeer(int SubType, CFE_SB_MsgId_t MsgID, CFE_SB
  */
 SBN_Status_t SBN_SendLocalSubsToPeer(SBN_PeerInterface_t *Peer)
 {
-    uint8      Buf[SBN_PACKED_SUB_SZ];
-    SBN_Pack_t Pack;
+    uint8           Buf[SBN_PACKED_SUB_SZ];
+    SBN_PackState_t Pack;
     SBN_Pack_Init(&Pack, &Buf, SBN_PACKED_SUB_SZ, 0);
     SBN_Pack_Data(&Pack, (void *)SBN_IDENT, SBN_IDENT_LEN);
     SBN_Pack_UInt16(&Pack, SBN_AppData.SubCnt);
@@ -488,9 +488,9 @@ static SBN_Status_t ProcessSubFromPeer(SBN_PeerInterface_t *Peer, CFE_SB_MsgId_t
  */
 SBN_Status_t SBN_ProcessSubsFromPeer(SBN_PeerInterface_t *Peer, void *Msg)
 {
-    SBN_Status_t SBN_Status;
-    SBN_Pack_t   Pack;
-    char         VersionHash[SBN_IDENT_LEN];
+    SBN_Status_t    SBN_Status;
+    SBN_PackState_t Pack;
+    char            VersionHash[SBN_IDENT_LEN];
 
     SBN_Pack_Init(&Pack, Msg, CFE_MISSION_SB_MAX_SB_MSG_SIZE, false);
 
@@ -604,7 +604,7 @@ static SBN_Status_t ProcessUnsubFromPeer(SBN_PeerInterface_t *Peer, CFE_SB_MsgId
  */
 SBN_Status_t SBN_ProcessUnsubsFromPeer(SBN_PeerInterface_t *Peer, void *Msg)
 {
-    SBN_Pack_t Pack;
+    SBN_PackState_t Pack;
 
     SBN_Pack_Init(&Pack, Msg, CFE_MISSION_SB_MAX_SB_MSG_SIZE, false);
 
